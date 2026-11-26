@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HONEY BEES - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="login-container" id="loginPage">
+    <div class="login-box">
+        <h1>🐝 HONEY BEES</h1>
+        <h2>Honey Bee Venom Monitoring</h2>
+        <p>Admin Login</p>
+
+        <form id="loginForm">
+            <label>Username</label>
+            <input type="text" id="username" placeholder="Enter username" required>
+
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Enter password" required>
+
+            <button type="submit">Login</button>
+            <p id="message"></p>
+        </form>
+    </div>
+</div>
+
+<div id="dashboardPage" style="display:none;">
+
+    <header class="dashboard-header">
+        <h1>🐝 HONEY BEE Dashboard</h1>
+        <button onclick="logout()">Logout</button>
+    </header>
+
+    <main>
+        <h2>Welcome Admin!</h2>
+
+        <!-- DASHBOARD SUMMARY -->
+        <div class="dashboard">
+
+            <div class="card">
+                <h3>Total Hives</h3>
+                <p id="totalHives">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Temperature</h3>
+                <p id="dashboardTemperature">-- °C</p>
+            </div>
+
+            <div class="card">
+                <h3>Humidity</h3>
+                <p id="dashboardHumidity">-- %</p>
+            </div>
+
+            <div class="card">
+                <h3>Venom Collection</h3>
+                <p id="dashboardVenom">0 mg</p>
+            </div>
+
+        </div>
+
+        <!-- HIVE MANAGEMENT -->
+        <section class="hive-section">
+            <h2>🐝 Hive Management</h2>
+
+            <form id="hiveForm">
+                <label>Hive ID</label>
+                <input type="text" id="hiveId" placeholder="Example: HIVE-002" required>
+
+                <label>Hive Location</label>
+                <input type="text" id="hiveLocation" placeholder="Enter location" required>
+
+                <label>Bee Colony Type</label>
+                <input type="text" id="beeType" placeholder="Enter bee type" required>
+
+                <label>Hive Status</label>
+                <select id="hiveStatus">
+                    <option value="Normal">Normal</option>
+                    <option value="Warning">Warning</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+
+                <button type="submit">Save Hive</button>
+            </form>
+
+            <h2>Hive Records</h2>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hive ID</th>
+                            <th>Location</th>
+                            <th>Bee Type</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="hiveTable"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SENSOR MONITORING -->
+        <section class="sensor-section">
+
+            <h2>🌡 Sensor Monitoring</h2>
+            <p>Honey Bee Hive Environment Monitoring</p>
+
+            <div class="sensor-cards">
+
+                <div class="sensor-card">
+                    <h3>🌡 Temperature</h3>
+                    <p id="temperature">-- °C</p>
+                    <span id="tempStatus">Waiting for reading</span>
+                </div>
+
+                <div class="sensor-card">
+                    <h3>💧 Humidity</h3>
+                    <p id="humidity">-- %</p>
+                    <span id="humidityStatus">Waiting for reading</span>
+                </div>
+
+            </div>
+
+            <div class="sensor-info">
+                <h3>Sensor Connection</h3>
+                <p id="sensorConnection">Demo Mode - Not Connected</p>
+
+                <button onclick="updateSensor()">
+                    Update Sensor Readings
+                </button>
+            </div>
+
+            <!-- SENSOR READING HISTORY -->
+            <div class="sensor-history">
+
+                <h2>📋 Sensor Reading History</h2>
+                <p>Previous Temperature and Humidity Readings</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Temperature</th>
+                                <th>Humidity</th>
+                                <th>Date & Time</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="sensorHistoryTable">
+                            <tr>
+                                <td colspan="4">No sensor readings available</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <!-- SENSOR GRAPH -->
+            <div class="sensor-graph">
+
+                <h2>📈 Temperature & Humidity Analysis</h2>
+                <p>Sensor Reading Graph</p>
+
+                <div style="width:100%; height:350px;">
+                    <canvas id="sensorChart"></canvas>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- VENOM COLLECTION -->
+        <section class="venom-section">
+
+            <h2>🧪 Venom Collection Management</h2>
+            <p>Record and monitor bee venom collection details</p>
+
+            <form id="venomForm">
+
+                <label>Collection ID</label>
+                <input type="text" id="collectionId" placeholder="Example: V002" required>
+
+                <label>Hive ID</label>
+                <input type="text" id="collectionHive" placeholder="Example: HIVE-001" required>
+
+                <label>Collection Date</label>
+                <input type="date" id="collectionDate" required>
+
+                <label>Venom Quantity (mg)</label>
+                <input type="number" id="venomQuantity" placeholder="Enter quantity" min="0.1" step="0.1" required>
+
+                <label>Collection Method</label>
+                <select id="collectionMethod" required>
+                    <option value="">Select Method</option>
+                    <option value="Electric Venom Collector">Electric Venom Collector</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <button type="submit">Save Collection</button>
+            </form>
+
+            <h2>Collection History</h2>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Collection ID</th>
+                            <th>Hive ID</th>
+                            <th>Date</th>
+                            <th>Quantity</th>
+                            <th>Method</th>
+                        </tr>
+                    </thead>
+                    <tbody id="venomTable"></tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <!-- REPORTS -->
+        <section class="report-section">
+
+            <h2>📊 Reports and History</h2>
+            <p>Honey Bee Venom Monitoring Summary</p>
+
+            <div class="report-cards">
+
+                <div class="report-card">
+                    <h3>Total Hives</h3>
+                    <p id="reportHives">0</p>
+                </div>
+
+                <div class="report-card">
+                    <h3>Collection Records</h3>
+                    <p id="reportRecords">0</p>
+                </div>
+
+                <div class="report-card">
+                    <h3>Total Venom Quantity</h3>
+                    <p id="reportQuantity">0 mg</p>
+                </div>
+
+            </div>
+
+            <h3>Collection History</h3>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Collection ID</th>
+                            <th>Hive ID</th>
+                            <th>Date</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reportTable"></tbody>
+                </table>
+            </div>
+
+            <button onclick="downloadReport()">Download Report</button>
+
+        </section>
+
+    </main>
+</div>
+
+<!-- CHART LIBRARY -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- PROJECT JAVASCRIPT -->
+<script src="script.js"></script>
+
+</body>
+</html>
